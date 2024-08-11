@@ -2,6 +2,24 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 
+export const loadCartListState = () => {
+    const cartListState = localStorage.getItem('cartList');
+
+    if (cartListState !== null) {
+        try {
+            return JSON.parse(cartListState);
+        } catch (error) {
+            console.error('Error parsing cartList state:', error);
+            return initialState;
+        }
+    }
+        else {
+        return initialState;
+    }
+    
+
+}
+
 
 const initialState = {
     cartList: [],
@@ -10,47 +28,41 @@ const initialState = {
 }
 
 
+
 export const cartListSlice = createSlice({
     name: 'cartList',
     initialState,
     reducers: {
         addItem: (state, action) => {
-            const product = action.payload;
-            const existingItem = state.cartList.find((item) => item.id === product.id);
-            // alert(`${product.title} has been added to the cart!`);
-            if(!existingItem) {
-                state.cartList.push({...product, quantity: 1});
-                state.totalItems += 1;
-                state.totalPrice += product.price;
-            }else {
-                existingItem.quantity += 1;
-                state.totalPrice += product.price;
+            console.log('current state', state)
+            console.log('action', action.payload)
+            if (!Array.isArray(state.cartList)) {
+                state.cartList = [];
             }
+            state.cartList.push(action.payload);
+            state.totalItems += 1;
+            state.totalPrice += action.payload.price;
         },
         removeItem: (state, action) => {
-            const productId = action.payload;
-            const existingItem = state.cartList.find(item => item.id === productId);
-            if (existingItem.quantity === 1) {
-                state.totalItems -= 1;
-                state.totalPrice -= existingItem.price * existingItem.quantity;
-                state.cartList = state.cartList.filter(item => item.id !== productId);
+            if (!Array.isArray(state.cartList)) {
+                state.cartList = [];
             }
-            
-        },
-        updateItem: (state, action) => {
             const productId = action.payload;
             const existingItem = state.cartList.find(item => item.id === productId);
             if (existingItem) {
-                existingItem.quantity += 1;
+                state.totalItems -= 1;
+                state.totalPrice -= existingItem.price;
+                state.cartList = state.cartList.filter(item => item.id !== productId);
             }
-         },
+        },
 
          loadCart: (state, action) => {
-            const cartData = action.payload;
-            state.cartList = cartData.cartList;
-            state.totalItems = cartData.totalItems;
-            state.totalPrice = cartData.totalPrice;
-        },
+            state.cartList = action.payload.cartList || [];
+            state.totalItems = action.payload.totalItems || 0;
+            state.totalPrice = action.payload.totalPrice || 0;
+         },
+
+         
     
         clearCart: (state) => {
             state.cartList = [];

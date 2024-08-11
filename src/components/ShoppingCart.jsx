@@ -8,41 +8,44 @@ import LoginRegisterNav from './LoginRegisterNav';
 
 
 
+
 const ShoppingCart = () => {
-    const cartItems = useSelector((state) => state.cartList.cartList);
-    const totalItems = useSelector((state) => state.cartList.totalItems);
-    const totalPrice = useSelector((state) => state.cartList.totalPrice);
+    const cartItems = useSelector((state) => Array.isArray(state.cartList.cartList) ? state.cartList.cartList : []);
+    const totalItems = useSelector((state) => state.cartList.totalItems || 0);
+    const totalPrice = useSelector((state) => state.cartList.totalPrice || 0);
+
+    const memoCartItems = useMemo(() => cartItems, [cartItems]);
+    const memoTotalItems = useMemo(() => totalItems, [totalItems]);
+    const memoTotalPrice = useMemo(() => totalPrice, [totalPrice]);
+
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        localStorage.setItem('totalItems', totalItems);
-        localStorage.setItem('totalPrice', totalPrice);
-    }, [cartItems, totalItems, totalPrice])
+    useEffect (() => { 
+        localStorage.setItem('cartList', JSON.stringify(memoCartItems));
+        localStorage.setItem('totalItems', memoTotalItems);
+        localStorage.setItem('totalPrice', memoTotalPrice);
+    }, [memoCartItems, memoTotalItems, memoTotalPrice])
 
     useEffect(() => {
-        const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
+        const storedCartItems = JSON.parse(localStorage.getItem('cartList') || '[]');
         const storedTotalItems = parseInt(localStorage.getItem('totalItems'));
         const storedTotalPrice = parseFloat(localStorage.getItem('totalPrice'));
-
-        if (storedCartItems) {
-            dispatch(loadCart({
-                cartList: storedCartItems,
-                totalItems: storedTotalItems,
-                totalPrice: storedTotalPrice
-            }));
+    
+        if (Array.isArray(storedCartItems) && storedCartItems.length > 0) {
+          dispatch(loadCart({
+            cartList: storedCartItems,
+            totalItems: storedTotalItems,
+            totalPrice: storedTotalPrice,
+          }));
         }
-    }, []);
+      }, [dispatch]);
 
     const handleCheckout = useCallback(() => {
         dispatch(clearCart());
         alert('Thank you for your purchase!');
     }, [dispatch]);
 
-    const totalPriceMemo = useMemo(() => {
-        return totalPrice.toFixed(2);
-    }, [totalPrice]);
-
+    const totalPriceMemo = useMemo(() => (memoTotalPrice ? memoTotalPrice.toFixed(2) : '0.00'), [memoTotalPrice]);
 
 
   return (
@@ -53,14 +56,14 @@ const ShoppingCart = () => {
         <LoginRegisterNav />
         <h1>Shopping Cart</h1>
         <ul>
-            {cartItems.map((item) => (
+            {memoCartItems.map((item) => (
                 <li key={item.id}>
                     {item.title} - ${item.price}
                     <button onClick={() => dispatch(removeItem(item.id))}>Remove</button>
                 </li>
             ))}
         </ul>
-        <p>Total Items: {totalItems}</p>
+        <p>Total Items: {memoTotalItems}</p>
         <p>Total Price: ${totalPriceMemo}</p>
         <button onClick={handleCheckout}>Checkout</button>
 
@@ -78,4 +81,4 @@ const ShoppingCart = () => {
 
 }
 
-export default ShoppingCart
+export default React.memo(ShoppingCart)

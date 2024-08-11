@@ -1,11 +1,11 @@
-import React from 'react'
-import { Navbar } from 'react-bootstrap'
-import { Nav, NavbarToggle, NavbarCollapse, NavbarBrand } from 'react-bootstrap'
-
+import React, { useContext } from 'react'
+import { Navbar, Nav } from 'react-bootstrap'
+import UserContext from '../context/UserContext';
 
 
 
 const LoginRegisterNav = () => {
+  const { user } = useContext(UserContext);
 
 
 
@@ -19,8 +19,12 @@ const LoginRegisterNav = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/products">Products</Nav.Link>
-            <Nav.Link href="/cart">Cart</Nav.Link>
+            
+              <>
+              <Nav.Link href="/products">Products</Nav.Link>
+              <Nav.Link href="/cart">Cart({user.cart?.totalItems || 0})</Nav.Link>
+              </>
+            
           </Nav>
         </Navbar.Collapse>
       </Navbar>

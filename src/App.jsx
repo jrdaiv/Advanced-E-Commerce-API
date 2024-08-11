@@ -18,15 +18,28 @@ import './App.css'
 
 
 function App() {
-
   const queryClient = new QueryClient();
 
-  const [user, setUser] = useState({
+  const [user, setUser] = useState(() => { 
+    let currentUser = sessionStorage.getItem("user");
+    if (currentUser) {
+      return JSON.parse(currentUser);
+    }
+  })
+  const [newUser, setNewUser] = useState({
     email: '',
     password: '',
     userName: '',
     isLoggedIn: false
   });
+
+  // const [user, setUser] = useState({
+
+  //   email: '',
+  //   password: '',
+  //   userName: '',
+  //   isLoggedIn: false
+  // });
 
 
 
@@ -39,7 +52,7 @@ function App() {
 
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser , newUser, setNewUser}}>
           <Router>
             {/* <NavBar /> */}
             <Routes>

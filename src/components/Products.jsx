@@ -1,34 +1,24 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useProductData } from '../hooks/useProductData'
 import { useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { Card, Container } from 'react-bootstrap';
 import { addItem } from '../features/cartListSlice'
 import LoginRegisterNav from './LoginRegisterNav';
+import NavBar from './NavBar';
 
 const Products = () => {
-  let { products } = useProductData();
+  const { products: initialProducts } = useProductData();
   const queryClient = useQueryClient();
 
-  const searchProducts = queryClient.getQueryData('productSearch')
-
-  if (searchProducts) {
-    products = searchProducts
-  }
+  const searchProducts = queryClient.getQueryData('productSearch');
+  const products = useMemo(() => searchProducts || initialProducts, [searchProducts, initialProducts]);
 
   const dispatch = useDispatch();
 
-  const handleAddToCart = (products) => {
-    const addProduct = {
-      id: products.id,
-      title: products.title,
-      price: products.price,
-      image: products.image,
-      quantity: 1,
-    }
-    console.log(products)
-    dispatch(addItem(addProduct));
-    
+  const handleAddToCart = (product) => {
+    dispatch(addItem(product));
+    alert(`${product.title} added to cart`)
 
   }
 
@@ -38,6 +28,7 @@ const Products = () => {
 
     <div>
       <LoginRegisterNav />
+      {/* <NavBar /> */}
         <Container>
           <h1>Products</h1>
           <Card>
@@ -70,4 +61,4 @@ const Products = () => {
 
 }
 
-export default Products
+export default React.memo(Products)
