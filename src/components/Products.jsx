@@ -3,9 +3,8 @@ import { useProductData } from '../hooks/useProductData'
 import { useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { Card, Container } from 'react-bootstrap';
-import { addItem } from '../features/cartListSlice'
+import { addToCart, calculateTotals } from '../features/cartListSlice'
 import LoginRegisterNav from './LoginRegisterNav';
-import NavBar from './NavBar';
 
 const Products = () => {
   const { products: initialProducts } = useProductData();
@@ -17,7 +16,9 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const handleAddToCart = (product) => {
-    dispatch(addItem(product));
+    dispatch(addToCart(product));
+    dispatch(calculateTotals());
+    console.log(product);
     alert(`${product.title} added to cart`)
 
   }
@@ -28,7 +29,6 @@ const Products = () => {
 
     <div>
       <LoginRegisterNav />
-      {/* <NavBar /> */}
         <Container>
           <h1>Products</h1>
           <Card>
@@ -40,10 +40,10 @@ const Products = () => {
                     <Card.Title>{product.title}</Card.Title>
                     <Card.Img variant="top" src={product.image} />
                     <Card.Text>{product.description}</Card.Text>
-                    <Card.Text>{product.price}</Card.Text>
+                    <Card.Text>${product.price}</Card.Text>
                     <Card.Text>{product.category}</Card.Text>
                     <Card.Text>{product.rating.rate}</Card.Text>
-                  <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                  <button onClick={() => handleAddToCart(product) }>Add to Cart</button>
                 </div>
               ))}
             </Card.Body>

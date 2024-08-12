@@ -1,11 +1,23 @@
 import React, { useContext } from 'react'
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, Badge } from 'react-bootstrap'
 import UserContext from '../context/UserContext';
+
 
 
 
 const LoginRegisterNav = () => {
   const { user } = useContext(UserContext);
+
+
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('user');
+    setUser(null);
+    alert('You have been logged out');
+    navigate('/');
+};
+
+
 
 
 
@@ -22,7 +34,15 @@ const LoginRegisterNav = () => {
             
               <>
               <Nav.Link href="/products">Products</Nav.Link>
-              <Nav.Link href="/cart">Cart({user.cart?.totalItems || 0})</Nav.Link>
+              
+              <NavDropdown title="Profile" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
+                <NavDropdown.Item href="/" onClick={handleLogout}>Logout</NavDropdown.Item>
+              </NavDropdown>
+
+              <Nav.Link href="/cart">
+                Cart <Badge variant="secondary">{user?.cart?.length}</Badge>
+              </Nav.Link>
               </>
             
           </Nav>

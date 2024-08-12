@@ -1,14 +1,16 @@
+import { useEffect } from 'react';
 import React, { useContext, useState } from 'react';
 import { Navbar, Nav, Button, Offcanvas, Form, FormControl } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import UserContext  from '../context/UserContext';
+import axios from 'axios';
 // import Login from './Login';
 import Products from './Products';
 import Footer from './Footer';
 
 
 const NavBar = () => {
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
 
     const [showLogin, setShowLogin] = useState(false);
@@ -24,39 +26,73 @@ const NavBar = () => {
     const handleCloseRegister = () => setShowRegister(false);
     const handleShowRegister = () => setShowRegister(true);
 
-    const handleLogin =  (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        const storedUser = sessionStorage.getItem('user');
+        console.log(storedUser);
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
 
-        const currentUser = {
-            name: userName,
-            email: email,
-            password: password,
-            isLoggedIn: true,
 
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await axios.post('https://fakestoreapi.com/users', {
+                username: userName,
+                email: email,
+                password: password,
+            });
             
+            const userData = {
+                id: response.data.id,
+                name: userName,
+                email: email,
+                token: response.data.token,
+                isLoggedIn: true,
+            };
 
+            sessionStorage.setItem('user', JSON.stringify(userData));
+            console.log(userData);
+            setUser(userData);
+            alert('Login Successful');
+            navigate('/products');
+        } catch (error) {
+            console.error(error);
         }
-        sessionStorage.setItem('user', JSON.stringify(currentUser));
-        setUser(currentUser);
-        alert('Login Successfully');
-        navigate('/products');
     }
-    const handleRegister = (e) => {
+    
+    const handleRegister = async (e) => {
         e.preventDefault();
+        try {
+            const response = await axios.post('https://fakestoreapi.com/users', {
+                username: userName,
+                email: email,
+                password: password,
+            });
 
-        const newUser = {
-            name: userName,
-            email: email,
-            password: password,
-            isLoggedIn: true,
-
-
+            const newUser = {
+                id: response.data.id,
+                name: userName,
+                email: email,
+                token: response.data.token,
+                isLoggedIn: true,
+            };
+            sessionStorage.setItem('user', JSON.stringify(newUser));
+            console.log(newUser);
+            setUser(newUser);
+            alert('Registration Successful');
+            navigate('/products');
+            handleCloseRegister();
+        }catch (error) {
+            console.error(error);
+            alert('Registration Failed');
         }
-        sessionStorage.setItem('user', JSON.stringify(newUser));
-        setUser(newUser);
-        alert('Registered Successfully');
-        navigate('/products');
     }
+
+    
+
+    
     
 
 

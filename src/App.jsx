@@ -5,11 +5,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import { store } from './store';
 import UserContext from './context/UserContext';
-import NavBar from './components/NavBar';
 import Products from './components/Products';
 import ShoppingCart from './components/ShoppingCart';
+import Settings from './components/Settings';
 import Home from './components/Home';
-import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.css'
@@ -25,21 +24,9 @@ function App() {
     if (currentUser) {
       return JSON.parse(currentUser);
     }
+
   })
-  const [newUser, setNewUser] = useState({
-    email: '',
-    password: '',
-    userName: '',
-    isLoggedIn: false
-  });
 
-  // const [user, setUser] = useState({
-
-  //   email: '',
-  //   password: '',
-  //   userName: '',
-  //   isLoggedIn: false
-  // });
 
 
 
@@ -52,15 +39,14 @@ function App() {
 
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <UserContext.Provider value={{ user, setUser , newUser, setNewUser}}>
+        <UserContext.Provider value={{ user, setUser}}>
           <Router>
-            {/* <NavBar /> */}
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/products' element={<Products />} />
               <Route path='/cart' element={<ShoppingCart />} />
+              <Route path='/settings' element={<Settings />} />
             </Routes>
-            {/* <Footer /> */}
           </Router>
         </UserContext.Provider>
       </Provider>
