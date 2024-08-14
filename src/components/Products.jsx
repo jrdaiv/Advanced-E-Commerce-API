@@ -2,9 +2,10 @@ import React, { useMemo } from 'react'
 import { useProductData } from '../hooks/useProductData'
 import { useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
-import { Card, Container } from 'react-bootstrap';
+import { Card, Container, ListGroup } from 'react-bootstrap';
 import { addToCart, calculateTotals } from '../features/cartListSlice'
 import LoginRegisterNav from './LoginRegisterNav';
+import '../App.css'
 
 const Products = () => {
   const { products: initialProducts } = useProductData();
@@ -27,30 +28,37 @@ const Products = () => {
 
 
 
-    <div>
+    <div className="product-container">
       <LoginRegisterNav />
-        <Container>
-          <h1>Products</h1>
-          <Card>
+      <div className="container-sm container-md">
+        <div className="row">
+          {products.map((product) => (
+            <div className="col-md-6 col-sm-6" key={product.id}>
+              <Card style={{width: '18rem'}}>
+                <Card.Img variant="top" src={product.image} />
+                <Card.Body>
+                  <Card.Title>{product.title}</Card.Title>
+                  <Card.Text>
+                    {product.description}
+                  </Card.Text>
+                </Card.Body>
+                <ListGroup className="list-group-flush">
+                  <ListGroup.Item>Category: {product.category}</ListGroup.Item>
+                  <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+                  <ListGroup.Item>Rating: {product.rating.rate}</ListGroup.Item>
+                </ListGroup>
+                <Card.Body>
+                  <button className="btn btn-primary" onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                </Card.Body>
+              </Card>
+            </div>
+          ))}
 
-            <Card.Body>
-              {products.map((product) => (
-                <div key={product.id}>
-                    <Card.Body>{product.id}</Card.Body>
-                    <Card.Title>{product.title}</Card.Title>
-                    <Card.Img variant="top" src={product.image} />
-                    <Card.Text>{product.description}</Card.Text>
-                    <Card.Text>${product.price}</Card.Text>
-                    <Card.Text>{product.category}</Card.Text>
-                    <Card.Text>{product.rating.rate}</Card.Text>
-                  <button onClick={() => handleAddToCart(product) }>Add to Cart</button>
-                </div>
-              ))}
-            </Card.Body>
+        </div>
 
-          </Card>
 
-        </Container>
+      </div>
+        
 
     </div>
 

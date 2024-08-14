@@ -17,6 +17,7 @@ export const useProductData = () => {
                 setError(error.message)
             }
         }
+        
         fetchProducts();
     }, [])
 

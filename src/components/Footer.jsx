@@ -1,9 +1,29 @@
-import React from 'react'
+import React from 'react';
+import '../App.css'
+
+
 
 const Footer = () => {
+
+
   return (
-    <div>Footer</div>
+
+    <>
+    <div className="footer-container">
+      <a href="#">Back to top</a>
+      <p>© 2023 E-Commerce</p>
+    </div>
+    <div className='link-container'>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Contact Us</a>
+      <a href="#">About Us</a>
+      <a href="#">FAQs</a>
+    </div>
+    </>
   )
+
+
 }
 
 export default Footer

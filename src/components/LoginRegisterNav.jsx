@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Navbar, Nav, NavDropdown, Badge } from 'react-bootstrap'
 import UserContext from '../context/UserContext';
+import '../App.css'
 
 
 
@@ -26,7 +27,7 @@ const LoginRegisterNav = () => {
 
 
     <div>
-      <Navbar expand="sm" bg="light" variant="light">
+      <Navbar expand="sm" bg="transparent" variant="light">
         <Navbar.Brand href="/">Navbar</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -35,7 +36,7 @@ const LoginRegisterNav = () => {
               <>
               <Nav.Link href="/products">Products</Nav.Link>
               
-              <NavDropdown title="Profile" id="basic-nav-dropdown">
+              <NavDropdown title="Account" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
                 <NavDropdown.Item href="/" onClick={handleLogout}>Logout</NavDropdown.Item>
               </NavDropdown>

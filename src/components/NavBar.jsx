@@ -4,9 +4,8 @@ import { Navbar, Nav, Button, Offcanvas, Form, FormControl } from 'react-bootstr
 import { useNavigate } from 'react-router-dom';
 import UserContext  from '../context/UserContext';
 import axios from 'axios';
-// import Login from './Login';
-import Products from './Products';
-import Footer from './Footer';
+import '../App.css'
+
 
 
 const NavBar = () => {
@@ -102,20 +101,20 @@ const NavBar = () => {
 
 
     <div>
-        <Navbar bg="light" expand="sm">
+        <Navbar className='navbar-home' bg='transparent' expand="sm">
             <Navbar.Brand href="/">E-Commerce</Navbar.Brand>
             {/* <h5>User: {user.name}</h5> */}
                 <Navbar.Toggle aria-controls='basic-navbar-nav'/>
                     <Navbar.Collapse id='basic-navbar-nav'>
                             
-                        <Nav className='ms-auto'>
-                            <Button variant="outline-success" onClick={handleShowLogin}>Login</Button>{''}
-                            <Button variant="outline-success" onClick={handleShowRegister}>Register</Button>
+                        <Nav className='ms-auto mt-2'>
+                            <Button className='btn text-white' variant="contained" onClick={handleShowLogin}>Login</Button>{''}
+                            <Button className='btn text-white' variant="contained" onClick={handleShowRegister}>Register</Button>
                         </Nav>
                     </Navbar.Collapse> 
         </Navbar>
 
-        <Offcanvas show={showLogin} onHide={handleCloseLogin}>
+        <Offcanvas className='sm' show={showLogin} onHide={handleCloseLogin}>
             <Offcanvas.Header closeButton>
                 <Offcanvas.Title>Login</Offcanvas.Title>
             </Offcanvas.Header>

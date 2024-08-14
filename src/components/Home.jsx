@@ -1,5 +1,6 @@
 import React from 'react'
 import NavBar from './NavBar'
+import '../styles/Home.css'
 
 const Home = () => {
   
@@ -12,8 +13,11 @@ const Home = () => {
 
     <div>
       <NavBar/>
-      <h1>Home</h1>
-      <p>Please Log In or Register</p>
+      <div className="home-container">
+        <h1>Home</h1>
+        <p>Please Log In or Register</p>
+          
+      </div>
     </div>
 
 

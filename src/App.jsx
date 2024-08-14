@@ -12,6 +12,7 @@ import Home from './components/Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.css'
+import Footer from './components/Footer';
 
 
 
@@ -48,6 +49,7 @@ function App() {
               <Route path='/settings' element={<Settings />} />
             </Routes>
           </Router>
+          <Footer/>
         </UserContext.Provider>
       </Provider>
     </QueryClientProvider>
