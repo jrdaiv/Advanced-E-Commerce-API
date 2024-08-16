@@ -33,7 +33,7 @@ const Products = () => {
       <div className="container-sm container-md">
         <div className="row">
           {products.map((product) => (
-            <div className="col-md-6 col-sm-6" key={product.id}>
+            <div className="col-md" key={product.id}>
               <Card style={{width: '18rem'}}>
                 <Card.Img variant="top" src={product.image} />
                 <Card.Body>

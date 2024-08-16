@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, clearCart, calculateTotals } from '../features/cartListSlice';
 import LoginRegisterNav from './LoginRegisterNav';
+import '../App.css'
 
 const ShoppingCart = () => {
   const cartItems = useSelector(state => state.cart.items);
@@ -21,23 +22,27 @@ const ShoppingCart = () => {
 
 
   return (
-    <div>
+    <>
       <LoginRegisterNav />
-      <h2>Shopping Cart</h2>
+    <div className='cart-container'>
+      <h2 className='mt-5 mb-5 text-white'>Shopping Cart</h2>
       {cartItems.map(item => (
         <div key={item.id}>
-          <p>{item.title} - {item.quantity} - ${item.price}</p>
-          <button onClick={() => dispatch(removeFromCart(item))}>Remove</button>
+          <img src={item.image} alt={item.title} />
+          <p className='mt-4 text-white'>{item.title} - {item.quantity} - ${item.price} <br/> {item.category}</p>
+          {/* <P>{item.category}</P> */}
+          <button className="btn btn-danger" onClick={() => dispatch(removeFromCart(item))}>Remove</button>
         </div>
       ))}
-      <h3>Total: ${totalAmount.toFixed(2)}</h3>
-      <button onClick={() => {
+      <h3 className='mt-5 mb-3 text-white'>Total: ${totalAmount.toFixed(2)}</h3>
+      <button className='btn btn-primary' onClick={() => {
         dispatch(clearCart());
         
       }}>
         Checkout
       </button>
     </div>
+    </>
   );
   
 }

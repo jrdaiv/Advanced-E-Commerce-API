@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import LoginRegisterNav from "./LoginRegisterNav";
 import UserContext from "../context/UserContext";
+import '../App.css'
 
 
 
@@ -67,7 +68,7 @@ const Settings = () => {
   return (
     <div>
       <LoginRegisterNav />
-      <h2>Settings</h2>
+      <h2 className="mt-5 text-white">Settings</h2>
       <h5>Update Profile</h5>
       <Form onSubmit={handleUpdate}>
         <Form.Group as={Row} className="mb-3"  controlId="formPlaintextUserName" >
@@ -98,7 +99,7 @@ const Settings = () => {
           Update
         </Button>
       </Form>
-      <h5>Delete Account</h5>
+      <h5 className="mt-5 ">Delete Account</h5>
       <Form onSubmit={deleteUser}>
         <Button variant="danger" type="submit">
           Delete

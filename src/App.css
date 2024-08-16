@@ -100,12 +100,12 @@ div.list-group-item{
 } */
 
 .card{
-  width: 100%;
-  height: auto;
-  margin: 10px;
-  background: gray;
-  color: white;
-  padding: 5px;
+  /* width: 100%; */
+  /* height: auto; */
+  margin: 15px;
+  /* background: gray; */
+  /* color: white; */
+  /* padding: 5px; */
 
 }
 .home-container{
@@ -115,8 +115,8 @@ div.list-group-item{
   width: auto;
   padding: 4rem;
   margin: 4rem;
-  border: 2px solid white;
-  box-shadow: 0 0 15px;
+  /* border: 2px solid white; */
+  /* box-shadow: 0 0 15px; */
   border-radius: 10px;
 }
 
@@ -126,24 +126,53 @@ div.list-group-item{
   justify-content: space-evenly;
   text-align: center;
   text-decoration: none;
-  background-color: white;
+  background-color: transparent;
+}
+.link-container a{
+  color:white;
+  text-decoration: none;
 }
 
 .footer-container{
   display: flex;
+  text-decoration: none;
+  color: white;
   flex-direction: column;
   position: relative;
   margin: 4rem;
   margin-top: 30rem;
-  text-decoration: none;
 
 }
+.footer-container a{
+  color:white;
+  text-decoration: none;
+  margin: 2rem;
+}
 
+#btn-btn{
+  background-color: red;
+}
 
+.cart-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
+}
+.cart-container img{
+  width: 200px;
+  
+}
 
-
-
+button.navbar-toggler.collapsed{
+  color: white;
+  /* background: white; */
+}
+span.navbar-toggler-icon{
+  color: white;
+   
+  
+}
 
 
 

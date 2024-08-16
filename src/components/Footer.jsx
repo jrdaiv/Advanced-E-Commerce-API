@@ -10,9 +10,8 @@ const Footer = () => {
 
     <>
     <div className="footer-container">
-      <a href="#">Back to top</a>
-      <p>© 2023 E-Commerce</p>
     </div>
+      <p>© 2023 E-Commerce</p>
     <div className='link-container'>
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Use</a>

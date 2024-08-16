@@ -14,7 +14,7 @@ const Home = () => {
     <div>
       <NavBar/>
       <div className="home-container">
-        <h1>Home</h1>
+        {/* <h1>Home</h1> */}
         <p>Please Log In or Register</p>
           
       </div>
