@@ -27,6 +27,7 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.items = [];
       localStorage.removeItem('cartItems');
+      alert("Cart has been successfully checked out and cleared, thank you! ");
       console.log(state.items);
     },
   

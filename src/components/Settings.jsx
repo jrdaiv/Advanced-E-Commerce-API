@@ -99,7 +99,7 @@ const Settings = () => {
           Update
         </Button>
       </Form>
-      <h5 className="mt-5 ">Delete Account</h5>
+      <h5 className="mt-5 ">Delete User Account</h5>
       <Form onSubmit={deleteUser}>
         <Button variant="danger" type="submit">
           Delete

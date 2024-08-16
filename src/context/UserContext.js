@@ -11,6 +11,7 @@ const UserContext = createContext({
      setUser: () => { }
 })
 
+
 export const UserProvider = () => {
     const [user, setUser] = useState(() => {
         const savedUser = localStorage.getItem('user');
